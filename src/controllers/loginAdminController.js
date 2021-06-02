@@ -26,7 +26,7 @@ controller.signIn = (req, res) => {
 		const comparePassword = bcrypt.compareSync(adminPassword, hashPassword);
 
 		if (comparePassword) {
-			const token = jwt.sign({ adminKey:rows[0].adminKey }, keyToken);
+			const token = jwt.sign({ userKey:rows[0].adminKey }, keyToken);
 
 			res.status(200).json({
 				rows:{

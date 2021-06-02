@@ -7,35 +7,42 @@ const loginAdminController = require('../controllers/loginAdminController');
 const loginUserController = require('../controllers/loginUserController');
 const recipesAdminController = require('../controllers/recipesController');
 const regionAdminController = require('../controllers/regionController');
+const ingredientsController = require('../controllers/ingredientsController');
 
+/** SERVICIOS ADMINISTRADOR **/
 router.post('/admin/signin', loginAdminController.signIn);
 router.post('/admin/signup', loginAdminController.singUp);
 
+router.get('/admin/recipes/:type', verifyToken, recipesAdminController.getRecipe);
+router.post('/admin/recipes', verifyToken, recipesAdminController.insertRecipe);
+router.put('/admin/recipes', verifyToken, recipesAdminController.updateRecipe);
+router.put('/admin/status/recipes', verifyToken, recipesAdminController.updateStatusRecipe);
+
+router.get('/admin/region/:type', verifyToken, regionAdminController.getRegion);
+router.post('/admin/region', verifyToken, regionAdminController.insertRegion);
+router.put('/admin/region', verifyToken, regionAdminController.updateRegion);
+router.put('/admin/status/region', verifyToken, regionAdminController.updateStatusRegion);
+
+router.get('/admin/ingredients/:recipesKey', verifyToken, ingredientsController.getIngredients);
+router.post('/admin/ingredients', verifyToken, ingredientsController.insertIngredient);
+router.delete('/admin/ingredients', verifyToken, ingredientsController.deleteIngredient);
+
+/** SERVICIOS USUARIOS **/
 router.post('/signin', loginUserController.signIn);
 router.post('/signup', loginUserController.singUp);
-
-router.get('/admin/recipes/:type', recipesAdminController.getRecipe);
-router.post('/admin/recipes', recipesAdminController.insertRecipe);
-router.put('/admin/recipes', recipesAdminController.updateRecipe);
-router.put('/admin/status/recipes', recipesAdminController.updateStatusRecipe);
-
-router.get('/admin/region/:type', regionAdminController.getRegion);
-router.post('/admin/region', regionAdminController.insertRegion);
-router.put('/admin/region', regionAdminController.updateRegion);
-router.put('/admin/status/region', regionAdminController.updateStatusRegion);
 
 module.exports = router;
 
 function verifyToken(req, res, next) {
 	if (!req.headers.authorization) return res.status(401).send({
 		status:'error',
-		message:'Unauthorized request'
+		message:'No cuenta con autorización para la petición'
 	});
 
 	const token = req.headers.authorization.split(' ')[1];
 	if (token === 'null') return res.status(401).send({
 		status:'error',
-		message:'Token authorized required'
+		message:'Se requiere token de autorización'
 	});
 
 	const payload = jwt.verify(token, keyToken);
