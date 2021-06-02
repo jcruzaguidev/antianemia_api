@@ -3,9 +3,13 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { keyToken } = require('../keys');
 
+const loginAdminController = require('../controllers/loginAdminController');
 const loginUserController = require('../controllers/loginUserController');
 const recipesAdminController = require('../controllers/recipesController');
 const regionAdminController = require('../controllers/regionController');
+
+router.post('/admin/signin', loginAdminController.signIn);
+router.post('/admin/signup', loginAdminController.singUp);
 
 router.post('/signin', loginUserController.signIn);
 router.post('/signup', loginUserController.singUp);

@@ -50,12 +50,13 @@ controller.singUp = (req, res) => {
 
 	conn.query(sql, (err, rows) => {
 		if (!err) {
-			const token = jwt.sign({ userKey:rows[0].userKey }, keyToken);
+			const userKey = rows[0][0].userKey;
+			const token = jwt.sign({ userKey:userKey }, keyToken);
 
 			res.json({
 				status:'success',
 				rows:{
-					userKey:rows[0][0].userKey,
+					userKey:userKey,
 					userToken:token
 				}
 			});
