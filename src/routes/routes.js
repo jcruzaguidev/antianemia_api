@@ -8,6 +8,7 @@ const loginUserController = require('../controllers/loginUserController');
 const recipesAdminController = require('../controllers/recipesController');
 const regionAdminController = require('../controllers/regionController');
 const ingredientsController = require('../controllers/ingredientsController');
+const stepsController = require('../controllers/stepsCook');
 
 /** SERVICIOS ADMINISTRADOR **/
 router.post('/admin/signin', loginAdminController.signIn);
@@ -24,8 +25,12 @@ router.put('/admin/region', verifyToken, regionAdminController.updateRegion);
 router.put('/admin/status/region', verifyToken, regionAdminController.updateStatusRegion);
 
 router.get('/admin/ingredients/:recipesKey', verifyToken, ingredientsController.getIngredients);
-router.post('/admin/ingredients', verifyToken, ingredientsController.insertIngredient);
-router.delete('/admin/ingredients', verifyToken, ingredientsController.deleteIngredient);
+router.post('/admin/ingredients', verifyToken, ingredientsController.insertIngredients);
+router.delete('/admin/ingredients', verifyToken, ingredientsController.deleteIngredients);
+
+router.get('/admin/steps/:recipesKey', verifyToken, stepsController.getStepsCook);
+router.post('/admin/steps', verifyToken, stepsController.insertStepsCook);
+router.delete('/admin/steps', verifyToken, stepsController.deleteStepsCook);
 
 /** SERVICIOS USUARIOS **/
 router.post('/signin', loginUserController.signIn);

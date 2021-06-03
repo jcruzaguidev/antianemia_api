@@ -16,14 +16,14 @@ controller.getIngredients = (req, res) => {
 	});
 }
 
-controller.insertIngredient = (req, res) => {
+controller.insertIngredients = (req, res) => {
 	const { recipesKey, ingredientsName, ingredientsAmount } = req.body;
 	const sql = `CALL sp_insertIngredient('${recipesKey}', '${ingredientsName}', '${ingredientsAmount}')`;
 
 	runProcess(sql, res);
 }
 
-controller.deleteIngredient = (req, res) => {
+controller.deleteIngredients = (req, res) => {
 	const { recipesKey, ingredientsOrder } = req.body;
 	const sql = `CALL sp_deleteIngredient('${recipesKey}', ${ingredientsOrder})`;
 
