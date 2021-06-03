@@ -15,6 +15,7 @@ router.post('/admin/signin', loginAdminController.signIn);
 router.post('/admin/signup', loginAdminController.singUp);
 
 router.get('/admin/recipes/:type', verifyToken, recipesAdminController.getRecipe);
+router.get('/admin/recipes/detail/:recipesKey', verifyToken, recipesAdminController.getRecipeDetail);
 router.post('/admin/recipes', verifyToken, recipesAdminController.insertRecipe);
 router.put('/admin/recipes', verifyToken, recipesAdminController.updateRecipe);
 router.put('/admin/status/recipes', verifyToken, recipesAdminController.updateStatusRecipe);

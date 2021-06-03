@@ -24,6 +24,22 @@ controller.getRecipe = (req, res) => {
 	});
 }
 
+controller.getRecipeDetail = (req, res) => {
+	const { recipesKey } = req.params;
+	console.log(recipesKey);
+	const sql = `CALL sp_getRecipeDetail('${recipesKey}')`;
+
+	conn.query(sql, (err, rows) => {
+		if (!err)
+			res.status(200).json({
+				recipesData: rows[0],
+				recipesIngredients: rows[1],
+				recipesStepsCooking: rows[2]
+			});
+		else
+			res.status(400).json({ message:err.sqlMessage });
+	});
+}
 
 controller.insertRecipe = (req, res) => {
 	const { regionKey, recipesName, recipesDescription, recipesTimeCook } = req.body;
